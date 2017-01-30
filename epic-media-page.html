@@ -62,7 +62,7 @@ Example:
 
     .heroTop {
       padding: 50px 1em;
-      background: url("img/events-hero.jpg") center center no-repeat;
+      background: url("//images.contentful.com/1kzutnf7jc3r/19FGk6Fi9CCEQ0kaQSKs4W/4371f564409a8b243823125f334e8f54/0011_ZEAL_HP_Component1_ALT_MECH.jpg") center center no-repeat;
       background-size: cover;
       color: white;
     }
@@ -74,8 +74,7 @@ Example:
       line-height: 300px
     }
 
-    .pastEvents,
-    .upcomingEvents {
+    .mediaMentions {
       position: relative;
       width: 90%;
       margin: 0 auto;
@@ -85,21 +84,13 @@ Example:
       align-items: flex-start;
       align-content: flex-start;
       flex-flow: row wrap;
-      /*
-              Playing with a masonry-like display. Problems include that the order is top-down, then wrap... and that the container needs a fixed height.
-
-                  justify-content: flex-start;
-                  align-items: flex-start;
-                  align-content: space-between;
-                  flex-flow: column wrap;
-            */
     }
 
-    .pastEvents .event .card .imageBackground {
+    .mediaMentions .mention .card .imageBackground {
       position: relative
     }
 
-    .pastEvents .event .card .imageBackground:after {
+    /*.mediaMentions .mention .card .imageBackground:after {
       content: ' ';
       background-color: transparent;
       background: linear-gradient(to top, #fff, transparent);
@@ -108,53 +99,45 @@ Example:
       position: absolute;
       left: 0;
       top: 0
-    }
+    }*/
 
-    .pastEvents .event .card .content {
-      /*opacity: .6;*/
-    }
-
-    .pastEvents .event .card .content .details {
-      display: none
-    }
-
-    .event {
+    .mention {
       flex-basis: 33.33%;
       padding: 0 1em;
       box-sizing: border-box;
       margin: 0 0 30px;
     }
 
-    .event .card {
+    .mention .card {
       width: 100%;
       background: white;
       box-shadow: 0 0 5px #aaa
     }
 
-    .event .card .imageBackground {
+    .mention .card .imageBackground {
       font-size: 0;
       background-size: cover;
       padding-top: 60%;
       background-position: center center;
     }
 
-    .event .card .content {
+    .mention .card .content {
       padding: 15px;
       text-align: center
     }
 
-    .event .card .content h2 {
+    .mention .card .content h2 {
       margin: 0;
       font-size: 1.6em;
     }
 
-    .event .card .content h3 {
+    .mention .card .content h3 {
       /*font-weight: normal;*/
       /*font-size: 1em;*/
       padding: 0;
     }
 
-    .event .card .content .details {
+    .mention .card .content .details {
       border-right: 0;
       border-left: 0;
       padding: 0;
@@ -165,19 +148,26 @@ Example:
       align-items: stretch;
     }
 
-    .event .card .content .details p {
+    .mention .card .content .details p {
       display: inline-block;
-      flex-basis: 50%;
+      flex-basis: 100%;
       flex-grow: 1;
       margin-bottom: 0;
       padding-right: 1em;
     }
 
-    .event .card .content> * {
+    .mention .card .content .details .startDate {
+      text-align: right;
+      padding: 0;
+      flex-basis: 80px; /* enough room to display a date, ie "02-09-2017" */
+      flex-shrink: 0;
+    }
+
+    .mention .card .content> * {
       text-align: left
     }
 
-    .event .card .content a.moreDetails {
+    .mention .card .content a.moreDetails {
       display: inline-block;
       background: #c30;
       padding: 1em 2em;
@@ -187,7 +177,7 @@ Example:
       letter-spacing: .025em;
     }
 
-    .event .card .content a.moreDetails:hover {
+    .mention .card .content a.moreDetails:hover {
       background: #a52900;
       cursor: pointer;
     }
@@ -202,16 +192,16 @@ Example:
         padding: 1em 20px;
         font-size: 4em
       }
-      .event {
+      .mention {
         flex-basis: 50%;
       }
-      .event .card .content h2 {
+      .mention .card .content h2 {
         font-size: 2rem
       }
-      .event .card .content .eventDetails {
+      .mention .card .content .mentionDetails {
         font-size: 1rem
       }
-      .event .card .content .moreDetails {
+      .mention .card .content .moreDetails {
         font-size: 1rem
       }
     }
@@ -224,7 +214,7 @@ Example:
         font-size: 3em;
         line-height: 1.5em
       }
-      .event {
+      .mention {
         flex-basis: 100%;
         padding: 10px 0 !important
       }
@@ -235,36 +225,36 @@ Example:
     <app-route route="[[route]]" pattern="/:slug" data="{{data}}" tail="{{tail}}" active="{{isDetail}}"></app-route>
 
     <template is="dom-if" if="[[data.slug]]">
-      <epic-event-detail-page event-slug="[[data.slug]]"></epic-event-detail-page>
+      <epic-media-detail-page media-slug="[[data.slug]]"></epic-media-detail-page>
     </template>
 
     <template is="dom-if" if="[[!data.slug]]">
-      <epic-contentful token="7293987ea91368b8cae485aeadc4037af8253ae4706e2fa0400f9a831aa93086" space="1kzutnf7jc3r" content-type="events" entries="{{entries}}"></epic-contentful>
+      <epic-contentful token="7293987ea91368b8cae485aeadc4037af8253ae4706e2fa0400f9a831aa93086" space="1kzutnf7jc3r" content-type="media" entries="{{entries}}"></epic-contentful>
 
       <zeal-navbar></zeal-navbar>
 
       <div id="pageContent" class="main">
 
           <div class="heroTop">
-            <h1>Events &amp; Happenings</h1>
+            <h1>Media Mentions</h1>
           </div>
 
-          <h2>Upcoming Events</h2>
+          <h2>Zeal in the Media</h2>
 
-          <div class="upcomingEvents">
-            <template is="dom-repeat" items="{{events}}" filter="isUpcoming">
-              <div class="event">
+          <div class="mediaMentions">
+            <template is="dom-repeat" items="{{mentions}}">
+              <div class="mention">
                 <div class="card">
                   <div class="imageBackground" style$="background-image: url([[item.featuredImage]]);">
                   </div>
                   <div class="content">
                     <h2>[[item.name]]</h2>
                     <div class="details">
-                      <p class="location">[[item.locationString]]</p>
-                      <p class="startDate">[[item.startAndEnd]]</p>
+                      <p class="location">[[item.publication]]</p>
+                      <p class="startDate">[[item.date]]</p>
                     </div>
                     <h3>[[item.teaser]]</h3>
-                    <p class="eventDetails">[[item.truncatedDetails]]</p>
+                    <p class="mentionDetails">[[item.truncatedDetails]]</p>
                     <a href="[[item.slug]]" class="moreDetails">Learn More</a>
                   </div>
                 </div>
@@ -272,32 +262,8 @@ Example:
             </template>
           </div>
 
-          <!-- featured events slider -->
-          <epic-slider min-height="500px" slides="{{featuredUpcomingEvents}}"></epic-slider>
-
-          <h2>Past Events</h2>
-
-          <div class="pastEvents">
-            <template is="dom-repeat" items="{{events}}" filter="isPast">
-              <div class="event">
-                <div class="card">
-                  <div class="imageBackground" style$="background-image: url([[item.featuredImage]]);">
-                  </div>
-                  <div class="content">
-                    <h2>[[item.name]]</h2>
-                    <div class="details">
-                      <p class="location">[[item.locationString]]</p>
-                      <p class="startDate">[[item.startAndEnd]]</p>
-                    </div>
-                    <h3>[[item.teaser]]</h3>
-                    <p class="eventDetails">[[item.truncatedDetails]]</p>
-                    <a href="[[item.slug]]" class="moreDetails">Learn More</a>
-                  </div>
-                </div>
-              </div>
-            </template>
-          </div>
-
+          <!-- featured mentions slider -->
+          <epic-slider min-height="500px" slides$="{{featuredMentions}}"></epic-slider>
       </div>
 
       <zeal-footer></zeal-footer>
@@ -316,14 +282,14 @@ Example:
             return {};
           }
         },
-        events: {
+        mentions: {
           type: Array,
           value: function() {
             return [];
           },
           notify: true
         },
-        featuredUpcomingEvents: {
+        featuredMentions: {
           type: Array,
           value: function() {
             return [];
@@ -337,27 +303,19 @@ Example:
       },
 
       observers: [
-        'eventsChanged(events.splices)',
+        'mentionsChanged(mentionss.splices)',
         '_observeEntries(entries)',
       ],
 
       ready: function() {},
 
-      isPast: function(event) {
-        return !this.isUpcoming(event);
+      isFeatured: function(mention) {
+        return mention.featuredMention == true;
       },
 
-      isUpcoming: function(event) {
-        return moment(event.startDate).isAfter(moment());
-      },
-
-      isFeatured: function(event) {
-        return event.featuredEvent == true;
-      },
-
-      eventsChanged: function(splices) {
-        this.featuredUpcomingEvents = this.events.filter((function(element, index, array) {
-          return (element.featuredEvent == true && this.isUpcoming(element))
+      mentionsChanged: function(splices) {
+        this.featuredMentions = this.mentions.filter((function(element, index, array) {
+          return (element.featuredMention == true)
         }).bind(this));
       },
 
@@ -366,33 +324,10 @@ Example:
           return;
         }
 
-        // update this.events
+        // update this.mentions
         for (var i = 0; i < response.items.length; i += 1) {
-          // format event start date
-          var longStartDate = moment(response.items[i].fields.startDate).format("ddd, MMM D h:mmA"),
-            shortStartDate = moment(response.items[i].fields.startDate).format("M/D/YY hA");
 
-          /*
-            Time Formatting
-
-            If the event lasts more than one day, exclude the start/end time.
-            If the event is only one day, show the start and end times.
-
-            i.e.
-              Jun 30 6:00PM
-              Jun 30 - Jul 1
-          */
-
-          var startDay = moment(response.items[i].fields.startDate).format("D"),
-            endDay = moment(response.items[i].fields.endDate).format("D"),
-            startAndEnd,
-            truncatedDetails;
-
-          if (startDay !== endDay) {
-            startAndEnd = moment(response.items[i].fields.startDate).format("MMM D - ") + moment(response.items[i].fields.endDate).format("MMM D");
-          } else {
-            startAndEnd = moment(response.items[i].fields.startDate).format("MMM D h:mmA");
-          }
+          var truncatedDetails;
 
           // truncate event details to first x characters
           if (response.items[i].fields.details && response.items[i].fields.details.length > this.maxDetailsChars) {
@@ -402,23 +337,20 @@ Example:
             truncatedDetails = response.items[i].fields.details;
           }
 
-          this.push('events', {
+          this.push('mentions', {
             'blogUrl': response.items[i].fields.blogUrl,
             'details': response.items[i].fields.details,
-            'endDate': response.items[i].fields.endDate,
             'externalUrl': response.items[i].fields.externalUrl,
-            'featuredEvent': response.items[i].fields.featuredEvent,
+            'featuredMention': response.items[i].fields.featuredMention,
             'featuredImage': response.items[i].fields.featuredImage.fields.file.url,
-            'locationString': response.items[i].fields.locationString,
+            'publication': response.items[i].fields.publication,
             'name': response.items[i].fields.name,
-            'slug': '/events/' + response.items[i].fields.slug,
-            'startDate': response.items[i].fields.startDate,
+            'slug': '/media/' + response.items[i].fields.slug,
+            'date': response.items[i].fields.date,
             'teaser': response.items[i].fields.teaser,
             'video': response.items[i].fields.video,
             'truncatedDetails': truncatedDetails,
-            'startAndEnd': startAndEnd,
             'heading': response.items[i].fields.name,
-            'subheading': startAndEnd,
             'ctaText': 'Learn More'
           });
         }
