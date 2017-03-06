@@ -5,7 +5,7 @@
     "polymer": "Polymer/polymer#^1.4.0",
     "zeal-footer": "mauijim/zeal-footer",
     "zeal-navbar": "mauijim/zeal-navbar",
-    "epic-contentful": "epic-elements/epic-contentful",
+    "epic-contentful": "epic-elements/epic-contentful#transpile",
     "epic-polyfills": "epic-elements/epic-polyfills",
     "epic-slider": "epic-web-components/epic-slider",
     "masonry": "^4.1.0",
