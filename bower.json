@@ -1,5 +1,6 @@
 {
   "name": "epic-media-page",
+  "description": "a media hit home page",
   "main": "epic-media-page.html",
   "dependencies": {
     "polymer": "Polymer/polymer#^1.4.0",
