@@ -549,6 +549,8 @@ Example:
         'title': response.items[0].fields.featuredImage.fields.file.title
       }
 
+      this.updateOpenGraphTags();
+
       if (response.items[0].fields.video) {
         this.video = response.items[0].fields.video;
       } else {
@@ -582,5 +584,62 @@ Example:
         this.photos = [];
       }
     },
+
+    updateOpenGraphTags: function() {
+
+      var openGraphTitleElem = document.querySelector('meta[property="og:title"]'),
+          openGraphTypeElem = document.querySelector('meta[property="og:type"]'),
+          openGraphUrlElem = document.querySelector('meta[property="og:url"]'),
+          openGraphImageElem = document.querySelector('meta[property="og:image"]'),
+          openGraphDescriptionElem = document.querySelector('meta[property="og:description"]');
+
+      var url = 'http://coupons.zealoptics.com' + window.location.pathname;
+
+      if(openGraphTitleElem) {
+        openGraphTitleElem.setAttribute('content', this.name);
+      } else {
+        this.createMetaTag('og:title', this.name);
+      }
+
+      if(openGraphTypeElem) {
+        openGraphTypeElem.setAttribute('content', 'website');
+      } else {
+        this.createMetaTag('og:type', 'website');
+      }
+
+      if(openGraphUrlElem) {
+        openGraphUrlElem.setAttribute('url', url);
+      } else {
+        this.createMetaTag('og:url', url);
+      }
+
+      if(openGraphImageElem) {
+        openGraphImageElem.setAttribute('content', this.featuredImage.url);
+      } else {
+        this.createMetaTag('og:image', this.featuredImage.url);
+      }
+
+      if(openGraphDescriptionElem) {
+        openGraphDescriptionElem.setAttribute('content', this.teaser);
+      } else {
+        this.createMetaTag('og:description', this.teaser);
+      }
+    },
+
+    /*
+      Dynamically create a meta tag. Note for open graph element,
+        will need to pre-render this for social crawlers (FB, twitter, etc)
+        as they don't execute javascript like Google.
+    */
+    createMetaTag: function(prop, content) {
+      // create meta tag
+      var meta = document.createElement('meta');
+      meta.setAttribute("property", prop);
+      meta.setAttribute("content", content);
+
+      // insert into head
+      var head = document.getElementsByTagName('head')[0];
+      head.appendChild(meta);
+    }
   })
 </script>
