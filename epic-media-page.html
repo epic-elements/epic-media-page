@@ -62,7 +62,7 @@ Example:
 
     .heroTop {
       padding: 50px 1em;
-      background: url("//images.contentful.com/1kzutnf7jc3r/19FGk6Fi9CCEQ0kaQSKs4W/4371f564409a8b243823125f334e8f54/0011_ZEAL_HP_Component1_ALT_MECH.jpg?q=80&w=1680") center center no-repeat;
+      background: url("//images.contentful.com/1kzutnf7jc3r/1buyf0lTseiM8KiYKwuAis/f2cea44fbf5b9c3796e61d05d08500a0/media-cover-bright.jpg?q=80&w=1680") center center no-repeat;
       background-size: cover;
       color: white;
     }
@@ -186,6 +186,67 @@ Example:
       width: 100%;
     }
 
+    .loadMoreMedia {
+      text-align: center;
+    }
+
+    .loadMoreMedia a{
+      display: inline-block;
+      background: #fff;
+      color: white;
+      padding: 1em;
+      border: 1px solid #666;
+      color: #666;
+      margin: 1em auto 2em;
+    }
+
+    @-moz-keyframes spin {
+      from { -moz-transform: rotate(0deg); }
+      to { -moz-transform: rotate(359deg); }
+    }
+    @-webkit-keyframes spin {
+      from { -webkit-transform: rotate(0deg); }
+      to { -webkit-transform: rotate(359deg); }
+    }
+    @keyframes spin {
+      from {transform:rotate(0deg);}
+      to {transform:rotate(359deg);}
+    }
+
+    .loadMoreMedia a span.loading {
+      -webkit-animation-name: spin;
+      -webkit-animation-duration: 1s;
+      -webkit-animation-iteration-count: infinite;
+      -webkit-animation-timing-function: linear;
+      -moz-animation-name: spin;
+      -moz-animation-duration: 1s;
+      -moz-animation-iteration-count: infinite;
+      -moz-animation-timing-function: linear;
+      -ms-animation-name: spin;
+      -ms-animation-duration: 1s;
+      -ms-animation-iteration-count: infinite;
+      -ms-animation-timing-function: linear;
+
+      animation-name: spin;
+      animation-duration: 1s;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+    }
+
+    .loadMoreMedia a:hover {
+      background: #eee;
+    }
+
+    .loadMoreMedia a span {
+      font-size: 2em;
+      -webkit-transform: rotate(90deg) scale(-1, 1);
+              transform: rotate(90deg) scale(-1, 1);
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: .25em;
+      line-height: 1em;
+    }
+
     @media screen and (max-width: 991px) {
       .heroTop h1 {
         line-height: 1em;
@@ -228,53 +289,59 @@ Example:
   </style>
 
   <template>
-    <app-route route="[[route]]" pattern="/:slug" data="{{data}}" tail="{{tail}}" active="{{isDetail}}"></app-route>
 
-    <template is="dom-if" if="[[data.slug]]">
-      <epic-media-detail-page media-slug="[[data.slug]]"></epic-media-detail-page>
-    </template>
+    <epic-contentful
+      token="7293987ea91368b8cae485aeadc4037af8253ae4706e2fa0400f9a831aa93086"
+      space="1kzutnf7jc3r"
+      content-type="media"
+      entries="{{entries}}"
+      limit="20"
+      skip="0"
+      order-by="-fields.date"
+      mode="entries">
+    </epic-contentful>
 
-    <template is="dom-if" if="[[!data.slug]]">
-      <epic-contentful token="7293987ea91368b8cae485aeadc4037af8253ae4706e2fa0400f9a831aa93086" space="1kzutnf7jc3r" content-type="media" entries="{{entries}}"></epic-contentful>
+    <zeal-navbar></zeal-navbar>
 
-      <zeal-navbar></zeal-navbar>
+    <div id="pageContent" class="main">
 
-      <div id="pageContent" class="main">
+        <div class="heroTop">
+          <h1>Media Mentions</h1>
+        </div>
 
-          <div class="heroTop">
-            <h1>Media Mentions</h1>
-          </div>
+        <h2>Zeal in the Media</h2>
 
-          <h2>Zeal in the Media</h2>
-
-          <div class="mediaMentions">
-            <template is="dom-repeat" items="{{mentions}}">
-              <div class="mention">
-                <div class="card">
-                  <div class="imageBackground" style$="background-image: url([[item.featuredImage]]?q=50&w=960);">
+        <div class="mediaMentions">
+          <template is="dom-repeat" items="{{mentions}}">
+            <div class="mention">
+              <div class="card">
+                <div class="imageBackground" style$="background-image: url([[item.featuredImage]]);">
+                </div>
+                <div class="content">
+                  <h2>[[item.name]]</h2>
+                  <div class="details">
+                    <p class="location">[[item.publication]]</p>
+                    <p class="startDate">[[item.date]]</p>
                   </div>
-                  <div class="content">
-                    <h2>[[item.name]]</h2>
-                    <div class="details">
-                      <p class="location">[[item.publication]]</p>
-                      <p class="startDate">[[item.date]]</p>
-                    </div>
-                    <h3>[[item.teaser]]</h3>
-                    <p class="mentionDetails">[[item.truncatedDetails]]</p>
-                    <a href="[[item.slug]]" class="moreDetails">Explore More</a>
-                  </div>
+                  <h3>[[item.teaser]]</h3>
+                  <p class="mentionDetails">[[item.truncatedDetails]]</p>
+                  <a href="/media/[[item.slug]]" class="moreDetails">Explore More</a>
                 </div>
               </div>
-            </template>
-          </div>
+            </div>
+          </template>
+        </div>
 
-          <!-- featured mentions slider -->
-          <epic-slider min-height="500px" slides$="{{featuredMentions}}"></epic-slider>
-      </div>
+        <!-- featured mentions slider -->
+        <!-- <epic-slider min-height="500px" slides$="{{featuredMentions}}"></epic-slider> -->
 
-      <zeal-footer></zeal-footer>
+        <div class="loadMoreMedia">
+          <a href="#" id="loadMoreMedia"><span>&#8634;</span> Load More Media Hits</a>
+        </div>
+    </div>
+
+    <zeal-footer></zeal-footer>
   </template>
-</template>
 
   <script>
     Polymer({
@@ -309,9 +376,13 @@ Example:
       },
 
       observers: [
-        'mentionsChanged(mentionss.splices)',
+        'mentionsChanged(mentions.splices)',
         '_observeEntries(entries)',
       ],
+
+      listeners: {
+        'loadMoreMedia.tap': 'loadMoreMedia'
+      },
 
       ready: function() {},
 
@@ -330,36 +401,59 @@ Example:
           return;
         }
 
+        // stop loading animation
+        $('#loadMoreMedia span').removeClass('loading');
+
         // update this.mentions
         for (var i = 0; i < response.items.length; i += 1) {
 
           var truncatedDetails;
+          var cont = true;
 
-          // truncate event details to first x characters
-          if (response.items[i].fields.details && response.items[i].fields.details.length > this.maxDetailsChars) {
-            truncatedDetails = response.items[i].fields.details.substr(0, this.maxDetailsChars);
-            truncatedDetails += '...';
-          } else {
-            truncatedDetails = response.items[i].fields.details;
+          // check that event not already in array
+          for(var j = 0; j < this.mentions.length; j += 1) {
+            if(response.items[i].fields.slug == this.mentions[j].slug) {
+              cont = false;
+            }
           }
 
-          this.push('mentions', {
-            'blogUrl': response.items[i].fields.blogUrl,
-            'details': response.items[i].fields.details,
-            'externalUrl': response.items[i].fields.externalUrl,
-            'featuredMention': response.items[i].fields.featuredMention,
-            'featuredImage': response.items[i].fields.featuredImage.fields.file.url,
-            'publication': response.items[i].fields.publication,
-            'name': response.items[i].fields.name,
-            'slug': '/media/' + response.items[i].fields.slug,
-            'date': response.items[i].fields.date,
-            'teaser': response.items[i].fields.teaser,
-            'video': response.items[i].fields.video,
-            'truncatedDetails': truncatedDetails,
-            'heading': response.items[i].fields.name,
-            'ctaText': 'Learn More'
-          });
+          if(!cont) {
+            // mention already in array, no need to process or add to this.events
+            continue;
+          } else {
+            // truncate event details to first x characters
+            if (response.items[i].fields.details && response.items[i].fields.details.length > this.maxDetailsChars) {
+              truncatedDetails = response.items[i].fields.details.substr(0, this.maxDetailsChars);
+              truncatedDetails += '...';
+            } else {
+              truncatedDetails = response.items[i].fields.details;
+            }
+
+            this.push('mentions', {
+              'blogUrl': response.items[i].fields.blogUrl,
+              'details': response.items[i].fields.details,
+              'externalUrl': response.items[i].fields.externalUrl,
+              'featuredMention': response.items[i].fields.featuredMention,
+              'featuredImage': `${response.items[i].fields.featuredImage.fields.file.url}?w=686&q=80`,
+              'publication': response.items[i].fields.publication,
+              'name': response.items[i].fields.name,
+              'slug': response.items[i].fields.slug,
+              'date': response.items[i].fields.date,
+              'teaser': response.items[i].fields.teaser,
+              'video': response.items[i].fields.video,
+              'truncatedDetails': truncatedDetails,
+              'heading': response.items[i].fields.name,
+              'ctaText': 'Learn More'
+            });
+          }
         }
+      },
+
+      loadMoreMedia: function(e) {
+        e.preventDefault();
+        $('#loadMoreMedia span').addClass('loading');
+        var limit = parseInt($('epic-contentful').attr('limit'));
+        $('epic-contentful').attr('limit', limit + 9);
       }
     });
   </script>
