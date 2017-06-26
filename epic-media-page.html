@@ -372,7 +372,7 @@ Example:
 
       observers: [
         'mentionsChanged(mentions.splices)',
-        '_observeEntries(entries)',
+        '_observeEntries(entries)'
       ],
 
       listeners: {
@@ -429,7 +429,7 @@ Example:
               'details': response.items[i].fields.details,
               'externalUrl': response.items[i].fields.externalUrl,
               'featuredMention': response.items[i].fields.featuredMention,
-              'featuredImage': `${response.items[i].fields.featuredImage.fields.file.url}?w=686&q=80`,
+              'featuredImage': response.items[i].fields.featuredImage.fields.file.url + '?w=686&q=80',
               'publication': response.items[i].fields.publication,
               'name': response.items[i].fields.name,
               'slug': response.items[i].fields.slug,
