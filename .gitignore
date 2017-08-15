@@ -1,2 +1,6 @@
 bower_components/
 node_modules/
+
+demo/zeal.html
+
+demo/zeal-media-detail-page.html
