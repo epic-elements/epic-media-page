@@ -42,8 +42,8 @@ Example:
       background-size: cover;
       background-repeat: no-repeat;
       background-position: center center;
-      min-height: 800px;
-      height: 800px;
+      min-height: 500px;
+      height: auto;
       /* ie requires a height to vertically center */
       align-items: center;
       position: relative;
@@ -80,7 +80,7 @@ Example:
 
     .heroHeader .center h1 {
       text-align: center;
-      font-size: 5.625rem;
+      font-size: 5em;
       margin: 0 auto;
       color: white;
       text-shadow: 0 0 20px rgba(51, 51, 51, 0.5);
@@ -271,8 +271,9 @@ Example:
       flex: 1 1 33%;
       width: 33%;
       height: 300px;
-      background-size: cover;
+      background-size: contain;
       background-position: center center;
+      background-repeat: no-repeat;
     }
 
     .otherPhotos img {
@@ -339,7 +340,7 @@ Example:
 
     <div id="pageContent" class="main">
 
-      <div class="heroHeader" style$="background-image: url([[featuredImage.url]])">
+      <div class="heroHeader" style$="background-image: url([[marqueeImgUrl]])">
         <a href="/media/" class="mentions">&#8249; Back to Media</a>
         <div class="center">
           <h1 class="mentionName">{{name}}</h1>
@@ -370,14 +371,27 @@ Example:
               <template is="dom-if" if="[[poster]]">
                 <a href="[[poster.url]]"><img src="[[poster.url]]" alt="[[name]] poster" /></a>
               </template>
+
               <template is="dom-if" if="[[!poster]]">
-                <template is="dom-if" if="[[photos.0.url]]">
-                  <img src="[[photos.0.url]]" alt="[[name]]" />
+
+                <template is="dom-if" if="[[featuredImage]]">
+                  <img src="[[featuredImage.url]]" alt="[[featuredImage.title]]" />
                 </template>
-                <template is="dom-if" if="[[!photos.0.url]]">
-                  <img src="[[featuredImage.url]]" alt="[[name]]" />
+
+                <template is="dom-if" if="[[!featuredImage]]">
+
+                  <template is="dom-if" if="[[photos.0.url]]">
+                    <img src="[[photos.0.url]]" alt="[[name]]" />
+                  </template>
+
+                  <template is="dom-if" if="[[!photos.0.url]]">
+                    <img src="[[featuredImage.url]]" alt="[[name]]" />
+                  </template>
+
                 </template>
+
               </template>
+
             </div>
           </template>
 
@@ -472,6 +486,10 @@ Example:
       name: {
         type: String,
         value: ''
+      },
+      marqueeImgUrl : {
+        type: String,
+        value: 'https://images.contentful.com/1kzutnf7jc3r/1buyf0lTseiM8KiYKwuAis/f2cea44fbf5b9c3796e61d05d08500a0/media-cover-bright.jpg?q=80&w=1680'
       },
       /**
         Markdown-enabled text of the mention teaser
@@ -593,6 +611,6 @@ Example:
       } else {
         this.photos = [];
       }
-    },
+    }
   })
 </script>
