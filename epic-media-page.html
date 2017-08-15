@@ -306,11 +306,14 @@ Example:
 
         <h2>Zeal in the Media</h2>
 
+        <!-- featured mentions slider -->
+        <!-- <epic-slider min-height="500px" slides$="{{featuredMentions}}"></epic-slider> -->
+
         <div class="mediaMentions">
           <template is="dom-repeat" items="{{mentions}}">
             <div class="mention">
               <div class="card">
-                <div class="imageBackground" style$="background-image: url([[item.featuredImage]]);">
+                <div class="imageBackground" style$="background-image: url([[item.previewImage]]);">
                 </div>
                 <div class="content">
                   <h2>[[item.name]]</h2>
@@ -326,9 +329,6 @@ Example:
             </div>
           </template>
         </div>
-
-        <!-- featured mentions slider -->
-        <!-- <epic-slider min-height="500px" slides$="{{featuredMentions}}"></epic-slider> -->
 
         <div class="loadMoreMedia">
           <a href="#" id="loadMoreMedia"><span>&#8634;</span> Load More Media Hits</a>
@@ -432,12 +432,13 @@ Example:
               truncatedDetails = response.items[i].fields.details;
             }
 
-            this.push('mentions', {
+            var mention = {
               'blogUrl': response.items[i].fields.blogUrl,
               'details': response.items[i].fields.details,
               'externalUrl': response.items[i].fields.externalUrl,
               'featuredMention': response.items[i].fields.featuredMention,
-              'featuredImage': response.items[i].fields.featuredImage.fields.file.url + '?w=686&q=80',
+              'featuredImage': response.items[i].fields.featuredImage ? response.items[i].fields.featuredImage.fields.file.url + '?w=686&q=80' : '',
+              'previewImage': response.items[i].fields.previewImage ? response.items[i].fields.previewImage.fields.file.url + '?w=686&q=80' : response.items[i].fields.featuredImage.fields.file.url + '?w=686&q=80', // use featuredImage as backup
               'publication': response.items[i].fields.publication,
               'name': response.items[i].fields.name,
               'slug': response.items[i].fields.slug,
@@ -447,7 +448,9 @@ Example:
               'truncatedDetails': truncatedDetails,
               'heading': response.items[i].fields.name,
               'ctaText': 'Learn More'
-            });
+            };
+
+            this.push('mentions', mention);
           }
         }
       },
