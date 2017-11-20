@@ -17,273 +17,262 @@ Example:
 @demo
 -->
 <dom-module id="epic-media-page">
-  <style>
-    :host {
-      display: block;
-      width: 100%;
-      margin: 0;
-      padding: 0;
-      font-family: "Interstate", Helvetica, arial, sans-serif;
-    }
-
-    .main {
-      width: 100%;
-      background-image: url("img/decorative-texture-1.png");
-      background-repeat: repeat
-    }
-
-    .main a {
-      color: #666;
-      text-decoration: none;
-      text-transform: uppercase
-    }
-
-    .main h1 {
-      text-align: center;
-      font-size: 5em;
-      padding: 1em 0;
-      text-transform: uppercase;
-      background-color: transparent
-    }
-
-    .main h2 {
-      font-size: 42px;
-      text-align: center;
-      margin: 1em auto;
-      font-weight: bold;
-      text-transform: uppercase;
-      line-height: normal
-    }
-
-    .heroTop {
-      padding: 50px 1em;
-      background: url("//images.contentful.com/1kzutnf7jc3r/1buyf0lTseiM8KiYKwuAis/f2cea44fbf5b9c3796e61d05d08500a0/media-cover-bright.jpg?q=80&w=1680") center center no-repeat;
-      background-size: cover;
-      color: white;
-    }
-
-    .heroTop h1 {
-      padding: 0;
-      font-size: 5em;
-      text-shadow: 0 0 20px rgba(51, 51, 51, 0.5);
-      line-height: 300px
-    }
-
-    .mediaMentions {
-      position: relative;
-      width: 90%;
-      margin: 0 auto;
-      max-width: 1600px;
-      display: flex;
-      justify-content: flex-start;
-      align-items: flex-start;
-      align-content: flex-start;
-      flex-flow: row wrap;
-    }
-
-    .mediaMentions .mention .card .imageBackground {
-      position: relative
-    }
-
-    /*.mediaMentions .mention .card .imageBackground:after {
-      content: ' ';
-      background-color: transparent;
-      background: linear-gradient(to top, #fff, transparent);
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      left: 0;
-      top: 0
-    }*/
-
-    .mention {
-      flex-basis: 33.33%;
-      padding: 0 1em;
-      box-sizing: border-box;
-      margin: 0 0 30px;
-    }
-
-    .mention .card {
-      width: 100%;
-      background: white;
-      box-shadow: 0 0 5px #aaa
-    }
-
-    .mention .card .imageBackground {
-      font-size: 0;
-      background-size: cover;
-      padding-top: 60%;
-      background-position: center center;
-    }
-
-    .mention .card .content {
-      padding: 15px;
-      text-align: center
-    }
-
-    .mention .card .content h2 {
-      margin: 0;
-      font-size: 1.6em;
-    }
-
-    .mention .card .content h3 {
-      /*font-weight: normal;*/
-      /*font-size: 1em;*/
-      padding: 0;
-    }
-
-    .mention .card .content .details {
-      border-right: 0;
-      border-left: 0;
-      padding: 0;
-      text-align: left;
-      display: flex;
-      flex-flow: row nowrap;
-      justify-content: flex-start;
-      align-items: stretch;
-    }
-
-    .mention .card .content .details p {
-      display: inline-block;
-      flex-basis: 100%;
-      flex-grow: 1;
-      margin-bottom: 0;
-      padding-right: 1em;
-    }
-
-    .mention .card .content .details .startDate {
-      text-align: right;
-      padding: 0;
-      flex-basis: 85px; /* enough room to display a date, ie "02-09-2017" */
-      flex-shrink: 0;
-    }
-
-    .mention .card .content> * {
-      text-align: left
-    }
-
-    .mention .card .content a.moreDetails {
-      display: inline-block;
-      background: #c30;
-      padding: 1em 2em;
-      margin: 1em auto;
-      font-weight: bold;
-      color: white;
-      letter-spacing: .025em;
-    }
-
-    .mention .card .content a.moreDetails:hover {
-      background: #a52900;
-      cursor: pointer;
-    }
-
-    epic-slider {
-      width: 100%;
-    }
-
-    .loadMoreMedia {
-      text-align: center;
-    }
-
-    .loadMoreMedia a{
-      display: inline-block;
-      background: #fff;
-      color: white;
-      padding: 1em;
-      border: 1px solid #666;
-      color: #666;
-      margin: 1em auto 2em;
-    }
-
-    @-moz-keyframes spin {
-      from { -moz-transform: rotate(0deg); }
-      to { -moz-transform: rotate(359deg); }
-    }
-    @-webkit-keyframes spin {
-      from { -webkit-transform: rotate(0deg); }
-      to { -webkit-transform: rotate(359deg); }
-    }
-    @keyframes spin {
-      from {transform:rotate(0deg);}
-      to {transform:rotate(359deg);}
-    }
-
-    .loadMoreMedia a span.loading {
-      -webkit-animation-name: spin;
-      -webkit-animation-duration: 1s;
-      -webkit-animation-iteration-count: infinite;
-      -webkit-animation-timing-function: linear;
-      -moz-animation-name: spin;
-      -moz-animation-duration: 1s;
-      -moz-animation-iteration-count: infinite;
-      -moz-animation-timing-function: linear;
-      -ms-animation-name: spin;
-      -ms-animation-duration: 1s;
-      -ms-animation-iteration-count: infinite;
-      -ms-animation-timing-function: linear;
-
-      animation-name: spin;
-      animation-duration: 1s;
-      animation-iteration-count: infinite;
-      animation-timing-function: linear;
-    }
-
-    .loadMoreMedia a:hover {
-      background: #eee;
-    }
-
-    .loadMoreMedia a span {
-      font-size: 2em;
-      -webkit-transform: rotate(90deg) scale(-1, 1);
-              transform: rotate(90deg) scale(-1, 1);
-      display: inline-block;
-      vertical-align: middle;
-      margin-right: .25em;
-      line-height: 1em;
-    }
-
-    @media screen and (max-width: 991px) {
-      .heroTop h1 {
-        line-height: 1em;
-        padding: 1em 20px;
-        font-size: 4em
-      }
-      .mention {
-        flex-basis: 50%;
-      }
-      .mention .card .content h2 {
-        font-size: 2rem
-      }
-      .mention .card .content .mentionDetails {
-        font-size: 1rem
-      }
-      .mention .card .content .moreDetails {
-        font-size: 1rem
-      }
-    }
-
-    @media screen and (max-width: 768px) {
-      .heroTop {
-        padding: 50px 1em
-      }
-      .heroTop h1 {
-        font-size: 3em;
-        line-height: 1.5em
-      }
-      .mention {
-        flex-basis: 100%;
-        padding: 10px 0 !important
-      }
-    }
-
-    @media screen and (min-width: 1680px) {
-      .heroTop h1 {
-        line-height: 400px;
-      }
-    }
-  </style>
 
   <template>
+    <style>
+      :host {
+        display: block;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        font-family: "Interstate", Helvetica, arial, sans-serif;
+      }
+
+      .main {
+        width: 100%;
+        background-image: url("img/decorative-texture-1.png");
+        background-repeat: repeat
+      }
+
+      .main a {
+        color: #666;
+        text-decoration: none;
+        text-transform: uppercase
+      }
+
+      .main h1 {
+        text-align: center;
+        font-size: 5em;
+        padding: 1em 0;
+        text-transform: uppercase;
+        background-color: transparent
+      }
+
+      .main h2 {
+        font-size: 42px;
+        text-align: center;
+        margin: 1em auto;
+        font-weight: bold;
+        text-transform: uppercase;
+        line-height: normal
+      }
+
+      .heroTop {
+        padding: 50px 1em;
+        background: url("//images.contentful.com/1kzutnf7jc3r/1buyf0lTseiM8KiYKwuAis/f2cea44fbf5b9c3796e61d05d08500a0/media-cover-bright.jpg?q=80&w=1680") center center no-repeat;
+        background-size: cover;
+        color: white;
+      }
+
+      .heroTop h1 {
+        padding: 0;
+        font-size: 5em;
+        text-shadow: 0 0 20px rgba(51, 51, 51, 0.5);
+        line-height: 300px
+      }
+
+      .mediaMentions {
+        position: relative;
+        width: 90%;
+        margin: 0 auto;
+        max-width: 1600px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        align-content: flex-start;
+        flex-flow: row wrap;
+      }
+
+      .mediaMentions .mention .card .imageBackground {
+        position: relative
+      }
+
+      .mention {
+        flex-basis: 33.33%;
+        padding: 0 1em;
+        box-sizing: border-box;
+        margin: 0 0 30px;
+      }
+
+      .mention .card {
+        width: 100%;
+        background: white;
+        box-shadow: 0 0 5px #aaa
+      }
+
+      .mention .card .imageBackground {
+        font-size: 0;
+        background-size: cover;
+        padding-top: 60%;
+        background-position: center center;
+      }
+
+      .mention .card .content {
+        padding: 15px;
+        text-align: center
+      }
+
+      .mention .card .content h2 {
+        margin: 0;
+        font-size: 1.6em;
+      }
+
+      .mention .card .content h3 {
+        /*font-weight: normal;*/
+        /*font-size: 1em;*/
+        padding: 0;
+      }
+
+      .mention .card .content .details {
+        border-right: 0;
+        border-left: 0;
+        padding: 0;
+        text-align: left;
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: flex-start;
+        align-items: stretch;
+      }
+
+      .mention .card .content .details p {
+        display: inline-block;
+        flex-basis: 100%;
+        flex-grow: 1;
+        margin-bottom: 0;
+        padding-right: 1em;
+      }
+
+      .mention .card .content .details .startDate {
+        text-align: right;
+        padding: 0;
+        flex-basis: 85px; /* enough room to display a date, ie "02-09-2017" */
+        flex-shrink: 0;
+      }
+
+      .mention .card .content> * {
+        text-align: left
+      }
+
+      .mention .card .content a.moreDetails {
+        display: inline-block;
+        background: #c30;
+        padding: 1em 2em;
+        margin: 1em auto;
+        font-weight: bold;
+        color: white;
+        letter-spacing: .025em;
+      }
+
+      .mention .card .content a.moreDetails:hover {
+        background: #a52900;
+        cursor: pointer;
+      }
+
+      epic-slider {
+        width: 100%;
+      }
+
+      .loadMoreMedia {
+        text-align: center;
+      }
+
+      .loadMoreMedia a{
+        display: inline-block;
+        background: #fff;
+        color: white;
+        padding: 1em;
+        border: 1px solid #666;
+        color: #666;
+        margin: 1em auto 2em;
+      }
+
+      @-moz-keyframes spin {
+        from { -moz-transform: rotate(0deg); }
+        to { -moz-transform: rotate(359deg); }
+      }
+      @-webkit-keyframes spin {
+        from { -webkit-transform: rotate(0deg); }
+        to { -webkit-transform: rotate(359deg); }
+      }
+      @keyframes spin {
+        from {transform:rotate(0deg);}
+        to {transform:rotate(359deg);}
+      }
+
+      .loadMoreMedia a span.loading {
+        -webkit-animation-name: spin;
+        -webkit-animation-duration: 1s;
+        -webkit-animation-iteration-count: infinite;
+        -webkit-animation-timing-function: linear;
+        -moz-animation-name: spin;
+        -moz-animation-duration: 1s;
+        -moz-animation-iteration-count: infinite;
+        -moz-animation-timing-function: linear;
+        -ms-animation-name: spin;
+        -ms-animation-duration: 1s;
+        -ms-animation-iteration-count: infinite;
+        -ms-animation-timing-function: linear;
+
+        animation-name: spin;
+        animation-duration: 1s;
+        animation-iteration-count: infinite;
+        animation-timing-function: linear;
+      }
+
+      .loadMoreMedia a:hover {
+        background: #eee;
+      }
+
+      .loadMoreMedia a span {
+        font-size: 2em;
+        -webkit-transform: rotate(90deg) scale(-1, 1);
+                transform: rotate(90deg) scale(-1, 1);
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: .25em;
+        line-height: 1em;
+      }
+
+      @media screen and (max-width: 991px) {
+        .heroTop h1 {
+          line-height: 1em;
+          padding: 1em 20px;
+          font-size: 4em
+        }
+        .mention {
+          flex-basis: 50%;
+        }
+        .mention .card .content h2 {
+          font-size: 2rem
+        }
+        .mention .card .content .mentionDetails {
+          font-size: 1rem
+        }
+        .mention .card .content .moreDetails {
+          font-size: 1rem
+        }
+      }
+
+      @media screen and (max-width: 768px) {
+        .heroTop {
+          padding: 50px 1em
+        }
+        .heroTop h1 {
+          font-size: 3em;
+          line-height: 1.5em
+        }
+        .mention {
+          flex-basis: 100%;
+          padding: 10px 0 !important
+        }
+      }
+
+      @media screen and (min-width: 1680px) {
+        .heroTop h1 {
+          line-height: 400px;
+        }
+      }
+    </style>
 
     <epic-contentful
       token="[[contentfulToken]]"
@@ -305,9 +294,6 @@ Example:
         </div>
 
         <h2>Zeal in the Media</h2>
-
-        <!-- featured mentions slider -->
-        <!-- <epic-slider min-height="500px" slides$="{{featuredMentions}}"></epic-slider> -->
 
         <div class="mediaMentions">
           <template is="dom-repeat" items="{{mentions}}">
@@ -331,7 +317,7 @@ Example:
         </div>
 
         <div class="loadMoreMedia">
-          <a href="#" id="loadMoreMedia"><span>&#8634;</span> Load More Media Hits</a>
+          <a href="#" id="loadMoreMedia" on-click="loadMoreMedia"><span>&#8634;</span> Load More Media Hits</a>
         </div>
     </div>
 
@@ -339,73 +325,70 @@ Example:
   </template>
 
   <script>
-    Polymer({
+    class EpicMediaPage extends Polymer.Element {
+      static get is() { return 'epic-media-page' }
 
-      is: 'epic-media-page',
-
-      properties: {
-        entries: {
-          type: Object,
-          value: function() {
-            return {};
+      static get properties() {
+        return {
+          entries: {
+            type: Object,
+            value: function() {
+              return {};
+            }
+          },
+          mentions: {
+            type: Array,
+            value: function() {
+              return [];
+            },
+            notify: true
+          },
+          featuredMentions: {
+            type: Array,
+            value: function() {
+              return [];
+            },
+            notify: true
+          },
+          maxDetailsChars: {
+            Type: Number,
+            value: 150
+          },
+          contentfulToken: {
+            Type: String,
+            value: ''
+          },
+          contentfulSpace: {
+            Type: String,
+            value: ''
           }
-        },
-        mentions: {
-          type: Array,
-          value: function() {
-            return [];
-          },
-          notify: true
-        },
-        featuredMentions: {
-          type: Array,
-          value: function() {
-            return [];
-          },
-          notify: true
-        },
-        maxDetailsChars: {
-          Type: Number,
-          value: 150
-        },
-        contentfulToken: {
-          Type: String,
-          value: ''
-        },
-        contentfulSpace: {
-          Type: String,
-          value: ''
         }
-      },
+      }
 
-      observers: [
-        'mentionsChanged(mentions.splices)',
-        '_observeEntries(entries)'
-      ],
+      static get observers() {
+        return [
+          'mentionsChanged(mentions.splices)',
+          '_observeEntries(entries)'
+        ]
+      }
 
-      listeners: {
-        'loadMoreMedia.tap': 'loadMoreMedia'
-      },
-
-      ready: function() {},
-
-      isFeatured: function(mention) {
+      isFeatured(mention) {
         return mention.featuredMention == true;
-      },
+      }
 
-      mentionsChanged: function(splices) {
+      mentionsChanged(splices) {
         this.featuredMentions = this.mentions.filter((function(element, index, array) {
           return (element.featuredMention == true)
         }).bind(this));
-      },
+      }
 
-      _observeEntries: function(response) {
+      _observeEntries(response) {
         if (Object.keys(response).length === 0 && response.constructor === Object || !response || response == null) {
           return;
         }
 
         // stop loading animation
-        $('#loadMoreMedia span').removeClass('loading');
+        this.shadowRoot.querySelector('#loadMoreMedia span').classList.remove('loading');
 
         // update this.mentions
         for (var i = 0; i < response.items.length; i += 1) {
@@ -453,14 +436,16 @@ Example:
             this.push('mentions', mention);
           }
         }
-      },
-
-      loadMoreMedia: function(e) {
-        e.preventDefault();
-        $('#loadMoreMedia span').addClass('loading');
-        var limit = parseInt($('epic-contentful').attr('limit'));
-        $('epic-contentful').attr('limit', limit + 9);
       }
-    });
+
+      loadMoreMedia(e) {
+        e.preventDefault();
+        this.shadowRoot.querySelector('#loadMoreMedia span').classList.add('loading');
+        var limit = parseInt(this.shadowRoot.querySelector('epic-contentful').getAttribute('limit'));
+        this.shadowRoot.querySelector('epic-contentful').setAttribute('limit', limit + 9);
+      }
+    };
+
+    window.customElements.define(EpicMediaPage.is, EpicMediaPage);
   </script>
 </dom-module>
