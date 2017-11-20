@@ -3,11 +3,7 @@
   "main": "epic-media-page.html",
   "dependencies": {
     "polymer": "Polymer/polymer#^2.0.0",
-    "zeal-footer": "mauijim/zeal-footer",
-    "zeal-navbar": "mauijim/zeal-navbar",
-    "epic-contentful": "epic-elements/epic-contentful",
-    "epic-polyfills": "epic-elements/epic-polyfills",
-    "epic-slider": "epic-web-components/epic-slider",
+    "epic-contentful": "epic-elements/epic-contentful#polymer-2.0",
     "masonry": "^4.1.0",
     "moment": "^2.14.1",
     "marked-element": "PolymerElements/marked-element#^1.1.3",
@@ -22,5 +18,9 @@
   },
   "authors": [
     "Alex Goodwin <agoodwin@zealoptics.com>"
-  ]
+  ],
+  "resolutions": {
+    "polymer": "^2.0.0",
+    "webcomponentsjs": "^1.0.0"
+  }
 }
