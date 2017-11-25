@@ -560,7 +560,7 @@ Example:
     */
     _observeEntries(response) {
 
-      if (Object.keys(response).length === 0 && response.constructor === Object || !response || response == null || typeof response.items == 'undefined') {
+      if (Object.keys(response).length === 0 && response.constructor === Object || response.items.length === 0 || !response || typeof response.items == 'undefined') {
         return;
       }
 
